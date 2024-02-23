@@ -1,0 +1,22 @@
+CopyArrivalDate yes  # Propagate arrival time with the messages.
+Sync            Pull # Only propagate changes from far to near side.
+Create          Near # Automatically create missing mailboxes on the near side.
+Remove          Near # Propagate mailbox deletions to the near side.
+Expunge         Near # Permanently remove all messages on the far side marked for deletion.
+
+IMAPStore **USERNAME**@gmail.com
+Host      imap.gmail.com
+User      **USERNAME**@gmail.com
+Pass      **APP PASSWORD**                       # Google Account / Security / 2-Step Verification / App passwords
+SSLType   IMAPS
+
+MaildirStore **USERNAME**@gmail.com-backup
+Path         /mail/**USERNAME**@gmail.com/
+Inbox        /mail/**USERNAME**@gmail.com/Inbox
+SubFolders   Verbatim
+
+Channel   **USERNAME**@gmail.com
+Far       :**USERNAME**@gmail.com:
+Near      :**USERNAME**@gmail.com-backup:
+Patterns  * !"[Gmail]/Important" !"[Gmail]/Spam" # Synchronize all mailboxes except for Important and Spam.
+SyncState *                                      # Save Channel's synchronization state in a file named .mbsyncstate in the near side mailbox itself.
